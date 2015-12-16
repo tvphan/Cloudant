@@ -1,0 +1,76 @@
+1. Create DB session
+2. Create DB connection
+3. Add a document
+4. Test to get that document
+
+class cloudantDB:
+
+import requests
+import json
+
+dbUrl = “”
+dbName = “”
+dbUser = “”
+dbPass = “”
+
+def __init__ (self, session=None):
+	if session is None:
+    		self.session = requests.Session()
+		self.session.auth = [“dbUser”, “dbPass”]
+
+def sessionConnect (self):
+	resp = self.session.get(“dbUrl”)
+	if resp.ok:
+		return resp
+	else
+		print “Failed to connect to DB”, resp.status_code
+
+def dbConnect (self):
+	resp = self.session.get(“dbUrl”+”dbName”)
+	if resp not ok:
+		resp = self.session.put(“dbUrl”+”dbName”, self.session.auth)
+
+   	return resp
+
+def insertDoc (self, doc=“”, apiUrl, headers, data):
+	resp = self.session.put(apiUrl, self.session.auth, headers, data)
+	if rest.ok:
+		return resp
+	else 
+		print “Error”, str(resp.json())
+
+def getDoc (self, docID, apiUrl):
+	resp = self.session.get(apiUrl+”/“+docID)
+	if resp.ok:
+		return resp
+	else
+		print “Document not found”, str(resp.json())
+
+——————
+
+To test this:
+
+class TestInsertDoc (unitest.TestCase):
+
+dbUrl=“https://tphan.cloudant.com”
+dbName=“test”
+dbUser=“tphan”
+dbPass=“password”
+
+	def setUp(self):
+        self.db = cdb.cloudantDB()
+        self.assertTrue(self.db.sessionConnect().ok,”Failed to connect to DB")
+
+   	def testInsertDoc(self):
+	   apiUrl = “dbUrl”+”/“+”dbName”
+	   headers = {"content-type":"application/json"}
+	   data = json.dumps({"foo":"bar"})
+
+	   resp = self.db.insertDoc(doc={“_id”:“test1”, apiUrl, headers, data)
+
+         if resp.ok:
+		 checkresp = self.db.getDoc(“test1”, apiUrl)
+
+		 if not checkresp.ok:
+			print “Failed to get the document”, str(checkresp.json())
+	   
